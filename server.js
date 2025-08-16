@@ -1,5 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
+const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
@@ -8,7 +9,10 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))); // Assuming your files are in a 'public' folder
+app.use(cors()); // Enable CORS for all routes
+
+// Serve static files from the 'frontend' directory
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // Database connection
 const pool = new Pool({
@@ -58,13 +62,9 @@ app.get('/api/get-payments', async (req, res) => {
     }
 });
 
-// Serve the HTML files
+// This is an example of a simple route for testing, it is not serving HTML.
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.get('/data.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'data.html'));
+    res.send('Backend is running!');
 });
 
 // Start the server

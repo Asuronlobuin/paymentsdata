@@ -1,4 +1,5 @@
-// This script will run on both pages, but only execute the relevant parts based on the page's ID.
+// Replace with your Render backend URL
+const RENDER_BACKEND_URL = 'https://paymentsdata.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Logic for the payment form page
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const messageEl = document.getElementById('message');
 
             try {
-                const response = await fetch('/api/submit-payment', {
+                const response = await fetch(`${RENDER_BACKEND_URL}/api/submit-payment`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dataTableBody) {
         async function fetchData() {
             try {
-                const response = await fetch('/api/get-payments');
+                const response = await fetch(`${RENDER_BACKEND_URL}/api/get-payments`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
